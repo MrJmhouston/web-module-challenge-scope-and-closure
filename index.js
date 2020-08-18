@@ -65,35 +65,12 @@ function counter2() {
 Write a function called `inning` that returns a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
 function inning(b){
-  let homeScore = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
-  let awayScore = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
-  let homeTeam = "Home team";
-  let awayTeam = "Away team";
-
-  let inning = b;
-  for (i = 0; i < inning.length; i++) {
-    return inning;
-  }
-  if (inning === 9 && homeScore > 1) {
-    return `The final score is ${homeScore} runs for the ${homeTeam} and ${awayScore} runs for the ${awayTeam} in the ${inning}th inning.`;
-  } else if (inning === 9 && homeScore === 0) {
-    return `The final score is ${homeScore} runs for the ${homeTeam} and ${awayScore} runs for the ${awayTeam} in the ${inning}th inning.`;
-  } else if (inning === 9 && homeScore === 1){
-    return `The final score is ${homeScore} run for the ${homeTeam} and ${awayScore} run for the ${awayTeam} in the ${inning}th inning.`;
-  } else if (inning === 1) {
-    return `The current score is ${homeScore} run for the ${homeTeam} and ${awayScore} run for the ${awayTeam} in the ${inning}st inning.`;
-  } else if (inning === 2) {
-    return `The current score is ${homeScore} runs for the ${homeTeam} and ${awayScore} runs for the ${awayTeam} in the ${inning}nd inning.`;
-  } else if (inning === 3) {
-    return `The current score is ${homeScore} runs for the ${homeTeam} and ${awayScore} runs for the ${awayTeam} in the ${inning}rd inning.`;
-  } else if (inning >= 4 && inning <= 8) {
-    return `The current score is ${homeScore} runs for the ${homeTeam} and ${awayScore} runs for the ${awayTeam} in the ${inning}th inning.`;
-  } else {
-    return `The current score is ${homeScore} runs for the ${homeTeam} and ${awayScore} runs for the ${awayTeam} in the ${inning} inning.`;
-  }
+  let score = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
+  
+  return score;
 }
 
-console.log(inning(9));
+console.log(inning());
 
 /* Task 3: finalScore()
 
@@ -109,9 +86,13 @@ finalScore(inning, 9) might return:
 
 */ 
 
-function finalScore(cb, num){
-return cb(num);
-
+function finalScore(inning, num){
+  let score = {"home": 0, "away": 0};
+  for (let i = 0; i <= num; i++) {
+    score['home'] = score['home'] + inning();
+    score['away'] = score['away'] + inning();
+  }
+  return score;
 }
 
 console.log(finalScore(inning, 9));
@@ -138,23 +119,21 @@ Final Score: awayTeam - homeTeam */
 
 
 function scoreboard(cb, cb2, num) {
-  let inning = 1;
-  return function newInning() {
-    inning++;
+  let home = 0;
+  let away = 0;
+
+  for (i = 0; i < num; i++) {
+    home += finalScore(inning, i).home
+    away += finalScore(inning, i).away
   }
-  return cb2(num);
+  return `${i} Inning Away ${away} - Home ${home}`;
 }
-
-console.log(inning(1));
-console.log(inning(2));
-console.log(inning(3));
-console.log(inning(4));
-console.log(inning(5));
-console.log(inning(6));
-console.log(inning(7));
-console.log(inning(8));
-console.log(inning(9));
-
-
-
-
+console.log(scoreboard(finalScore, inning, 1));
+console.log(scoreboard(finalScore, inning, 2));
+console.log(scoreboard(finalScore, inning, 3));
+console.log(scoreboard(finalScore, inning, 4));
+console.log(scoreboard(finalScore, inning, 5));
+console.log(scoreboard(finalScore, inning, 6));
+console.log(scoreboard(finalScore, inning, 7));
+console.log(scoreboard(finalScore, inning, 8));
+console.log(scoreboard(finalScore, inning, 9));
